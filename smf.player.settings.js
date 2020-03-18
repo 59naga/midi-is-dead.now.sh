@@ -5,10 +5,18 @@ var player = new SMF.Player();
 player.setMasterVolume(16383 * 0.5);
 
 var soundEnabled = false;
-window.addEventListener(triggerName, function() {
-  soundEnabled = true;
-  document.body.classList.add("active");
-});
+window.addEventListener(
+  "message",
+  function(event) {
+    if (event.data !== "soundEnabled") {
+      return;
+    }
+
+    soundEnabled = true;
+    document.body.classList.add("active");
+  },
+  { once: true }
+);
 
 window.addEventListener("load", main, false);
 function main() {
@@ -196,7 +204,18 @@ function main() {
           if (soundEnabled) {
             play();
           } else {
-            window.addEventListener(triggerName, play, { once: true });
+            var listener = function(event) {
+              if (event.data !== "soundEnabled") {
+                return;
+              }
+              play();
+
+              window.removeEventListener("message", listener)
+            }
+            window.addEventListener(
+              "message",
+              listener,
+            );
           }
           _initilized = true;
         }, 10);

@@ -7,21 +7,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
   <meta name="robots" content="noindex" />
   <title>Web Midi Link</title>
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-33600926-1"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
-
-    gtag('config', 'UA-33600926-1');
-  </script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
     integrity="sha256-L/W5Wfqfa0sdBNIKN9cG6QA5F2qx4qICmU2VgLruv9Y=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://logue.dev/smfplayer.js/wml.css" />
+
+  <style>.active #play{display:none;}.overlay{z-index:100;position:fixed;top:0;left:0;right:0;bottom:0;text-align:center;font-size:80vh;line-height:100vh;background:rgba(0,0,0,0.5);color:black;}@media(orientation:portrait){.overlay{font-size:80vw;}}</style>
+  <script>
+var soundEnabled = false;
+var triggerName = window.ontouchstart === null ? "touchstart" : "click";
+window.addEventListener(triggerName, function() {
+  soundEnabled = true;
+  window.parent.postMessage("soundEnabled");
+  document.body.classList.add("active");
+});
+  </script>
 </head>
 
 <body>
+  <div id="play" class="overlay" style="cursor:pointer;">
+    ▶
+  </div>
+
   <div class="container-fluid">
     <header class="d-flex justify-content-between align-items-end">
       <h1 class="h2">SoundFont:<span id="soundfont"></span></h1>
