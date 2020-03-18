@@ -13,11 +13,8 @@
 
   <style>.active #play{display:none;}.overlay{z-index:100;position:fixed;top:0;left:0;right:0;bottom:0;text-align:center;font-size:80vh;line-height:100vh;background:rgba(0,0,0,0.5);color:black;}@media(orientation:portrait){.overlay{font-size:80vw;}}</style>
   <script>
-var soundEnabled = false;
 var triggerName = window.ontouchstart === null ? "touchstart" : "click";
 window.addEventListener(triggerName, function() {
-  soundEnabled = true;
-  window.parent.postMessage("soundEnabled");
   document.body.classList.add("active");
 });
   </script>

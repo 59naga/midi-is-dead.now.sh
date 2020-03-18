@@ -5,18 +5,16 @@ var player = new SMF.Player();
 player.setMasterVolume(16383 * 0.5);
 
 var soundEnabled = false;
-window.addEventListener(
-  "message",
-  function(event) {
-    if (event.data !== "soundEnabled") {
-      return;
-    }
-
+window.addEventListener('DOMContentLoaded', function() {
+  var iframeDocument = document.querySelector('iframe').contentWindow.document
+  var listener = function() {
     soundEnabled = true;
     document.body.classList.add("active");
-  },
-  { once: true }
-);
+
+    iframeDocument.removeEventListener(triggerName, listener);
+  }
+  iframeDocument.addEventListener(triggerName, listener);
+}, false);
 
 window.addEventListener("load", main, false);
 function main() {
@@ -204,18 +202,13 @@ function main() {
           if (soundEnabled) {
             play();
           } else {
-            var listener = function(event) {
-              if (event.data !== "soundEnabled") {
-                return;
-              }
+            var iframeDocument = document.querySelector('iframe').contentWindow.document
+            var listener = function() {
               play();
 
-              window.removeEventListener("message", listener)
+              iframeDocument.removeEventListener(triggerName, listener)
             }
-            window.addEventListener(
-              "message",
-              listener,
-            );
+            iframeDocument.addEventListener(triggerName, listener);
           }
           _initilized = true;
         }, 10);
