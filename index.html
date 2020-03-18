@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MIDI Player</title>
+  <script title="multibyte-filename" src="utf8.js"></script>
+  <script title="include theme" src="unzip.js"></script>
+  <script title="core" src="smf.player.min.js"></script>
+  <script title="GUI-events" src="smf.player.settings.js"></script>
+  <style>iframe{width:100%;height:500px;border:0;}#busy{display:none;}.busy #busy{display:block;}.busy #play{display:none;}.active #play{display:none;}.overlay{position:fixed;top:0;left:0;right:0;bottom:0;text-align:center;font-size:80vh;line-height:100vh;background:rgba(0,0,0,0.5);color:black;}</style>
+</head>
+<body>
+<div id="play" class="overlay" style="cursor:pointer;">
+  ▶
+</div>
+<div id="busy" class="overlay">
+  …
+</div>
+<header>
+  <button>random</button>
+  <button>stop/start</button>
+  <select id="wml">
+    <option url="./sf2synth2.html">A320U</option>
+    <option url="./wml.html">Yamaha XG</option>
+  </select>
+  <select id="theme">
+    <option>デジファミ音楽堂</option>
+    <option>RPGツクール200X</option>
+    <option>anomaria</option>
+    <option>blackray</option>
+    <option>FinalStage</option>
+    <option>Dance the Melody</option>
+    <option>OLD WOODS HUT</option>
+    <option>yamaha frmdl</option>
+    <option>Ramine</option>
+    <option>Senses Circuit</option>
+    <option>Astral Craft</option>
+    <option>白鳥静漣</option>
+    <option>かるがも行進局</option>
+    <option>ポールのハツカネズミ</option>
+    <option>未知考学の音楽置場</option>
+    <option>TAM Music Factory</option>
+    <option>魔王魂</option>
+    <option>ムスペル</option>
+    <option>虚ろいの都</option>
+    <option>夜明けの口笛吹き</option>
+    <option>四月馬鹿達の宴</option>
+    <option>Ruina 廃都の物語</option>
+  </select>
+  <select id="title"></select>
+  <button>share</button>
+
+  <input id="volume" type="range" onchange="player.setMasterVolume(Number(event.target.value) * 16383);" min="0" max="1" step="0.01" value="0.5">
+  <span style="cursor: pointer" onclick="document.querySelector('#volume').value !== '0' ? document.querySelector('#volume').value = '0'  : document.querySelector('#volume').value = '0.5'; player.setMasterVolume(Number(document.querySelector('#volume').value) * 16383);">📣</span>
+
+  <address>Powerd by <a href="http://imaya.github.io/demo/sf2.js/">SMF.Player</a></address>
+</header>
+</body>
+</html>
