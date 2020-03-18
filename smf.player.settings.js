@@ -184,7 +184,7 @@ function main() {
 
             // FIX: https://midi-is-dead.now.sh/?虚ろいの都=【KU-BO】ori_bt4&A320U 音量が0の状態で再生されるバグ
             // 非常に不安定な方法だが、ボリュームをセットするタイミングが未定義のため、1秒待って音量を再設定する
-            setTimeout(() => {
+            setTimeout(function() {
               player.setMasterVolume(16383 * Number(document.querySelector('#volume').value));
             }, 1000);
           }
