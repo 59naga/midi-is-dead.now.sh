@@ -53,7 +53,7 @@
   <input id="volume" type="range" onchange="player.setMasterVolume(Number(event.target.value) * 16383);" min="0" max="1" step="0.01" value="0.5">
   <span style="cursor: pointer" onclick="document.querySelector('#volume').value !== '0' ? document.querySelector('#volume').value = '0'  : document.querySelector('#volume').value = '0.5'; player.setMasterVolume(Number(document.querySelector('#volume').value) * 16383);">📣</span>
 
-  <address>Powerd by <a href="http://imaya.github.io/demo/sf2.js/">SMF.Player</a></address>
+  <address>Powerd by <a href="http://imaya.github.io/demo/sf2.js/" target="_blank">SMF.Player</a></address>
 </header>
 </body>
 </html>

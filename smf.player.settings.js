@@ -79,14 +79,14 @@ function main() {
       ];
       player.stop();
       player.setWebMidiLink(option.getAttribute("url"));
-      player.setMasterVolume(16383*.5);
+      player.setMasterVolume(16383 * Number(document.querySelector('#volume').value));
 
-      if(_wml) {
+      if (_wml) {
         document.body.classList.add("busy");
         setTimeout(function() {
           document.body.classList.remove("busy");
-          playAtTitle()
-        }, 3000)
+          playAtTitle();
+        }, 3000);
       }
 
       _wml = _parts.wml.value;
@@ -179,14 +179,21 @@ function main() {
             _parts.wml.value +
             ")";
 
-          if (soundEnabled) {
+          var play = function() {
             player.play();
+
+            // FIX: https://midi-is-dead.now.sh/?虚ろいの都=【KU-BO】ori_bt4&A320U 音量が0の状態で再生されるバグ
+            // 非常に不安定な方法だが、ボリュームをセットするタイミングが未定義のため、1秒待って音量を再設定する
+            setTimeout(() => {
+              player.setMasterVolume(16383 * Number(document.querySelector('#volume').value));
+            }, 1000);
+          }
+          if (soundEnabled) {
+            play();
           } else {
             window.addEventListener(
               "click",
-              function() {
-                player.play();
-              },
+              play,
               { once: true }
             );
           }
