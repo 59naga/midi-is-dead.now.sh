@@ -1,10 +1,11 @@
+var triggerName = window.ontouchstart === null ? "touchstart" : "click";
 var player = new SMF.Player();
 // player.setLoop(true);
 // player.setCC111Loop(true);
 player.setMasterVolume(16383 * 0.5);
 
 var soundEnabled = false;
-window.addEventListener("click", function() {
+window.addEventListener(triggerName, function() {
   soundEnabled = true;
   document.body.classList.add("active");
 });
@@ -25,8 +26,8 @@ function main() {
     toggle: document.querySelectorAll("header button")[1],
     share: document.querySelectorAll("header button")[2]
   };
-  _parts.next.addEventListener("click", playRandom, false);
-  _parts.toggle.addEventListener("click", toggle, false);
+  _parts.next.addEventListener(triggerName, playRandom, false);
+  _parts.toggle.addEventListener(triggerName, toggle, false);
   _parts.theme.addEventListener(
     "change",
     function() {
@@ -42,7 +43,7 @@ function main() {
     false
   );
   _parts.wml.addEventListener("change", setWML, false);
-  _parts.share.addEventListener("click", share, false);
+  _parts.share.addEventListener(triggerName, share, false);
   window.addEventListener("popstate", playAtSearch, false);
   window.addEventListener(
     "message",
@@ -79,7 +80,9 @@ function main() {
       ];
       player.stop();
       player.setWebMidiLink(option.getAttribute("url"));
-      player.setMasterVolume(16383 * Number(document.querySelector('#volume').value));
+      player.setMasterVolume(
+        16383 * Number(document.querySelector("#volume").value)
+      );
 
       if (_wml) {
         document.body.classList.add("busy");
@@ -185,17 +188,15 @@ function main() {
             // FIX: https://midi-is-dead.now.sh/?虚ろいの都=【KU-BO】ori_bt4&A320U 音量が0の状態で再生されるバグ
             // 非常に不安定な方法だが、ボリュームをセットするタイミングが未定義のため、1秒待って音量を再設定する
             setTimeout(function() {
-              player.setMasterVolume(16383 * Number(document.querySelector('#volume').value));
+              player.setMasterVolume(
+                16383 * Number(document.querySelector("#volume").value)
+              );
             }, 1000);
-          }
+          };
           if (soundEnabled) {
             play();
           } else {
-            window.addEventListener(
-              "click",
-              play,
-              { once: true }
-            );
+            window.addEventListener(triggerName, play, { once: true });
           }
           _initilized = true;
         }, 10);
